@@ -73,33 +73,33 @@ app.layout = dbc.Container([
             # input fantasy points per category
             html.Label('Input Fantasy Points per...'), html.Br(),
             html.Label('Goal'), html.Br(),
-            dcc.Input(id='goals', type='number', min=0, max=1000, step=1, placeholder="Goal", value=472),
+            dcc.Input(id='goals', type='number', min=0, max=1000, step=0.1, placeholder="Goal", value=472.0, debounce=True),
             html.Br(), html.Label('Assist'), html.Br(),
-            dcc.Input(id='assists', type='number', min=0, max=1000, step=1, placeholder="Assist", value=295),
+            dcc.Input(id='assists', type='number', min=0, max=1000, step=0.1, placeholder="Assist", value=295.0, debounce=True),
             html.Br(), html.Label('Shot'), html.Br(),
-            dcc.Input(id='shots', type='number', min=0, max=1000, step=1, placeholder="Shot", value=37),
+            dcc.Input(id='shots', type='number', min=0, max=1000, step=0.1, placeholder="Shot", value=37.0, debounce=True),
             html.Br(), html.Label('Hit'), html.Br(),
-            dcc.Input(id='hits', type='number', min=0, max=1000, step=1, placeholder="Hit", value=37),
+            dcc.Input(id='hits', type='number', min=0, max=1000, step=0.1, placeholder="Hit", value=37.0, debounce=True),
             html.Br(), html.Label('Powerplay Goal'), html.Br(),
-            dcc.Input(id='ppgoal', type='number', min=0, max=1000, step=1, placeholder="Power Play Goal", value=600),
+            dcc.Input(id='ppgoal', type='number', min=0, max=1000, step=0.1, placeholder="Power Play Goal", value=600.0, debounce=True),
             html.Br(), html.Label('Powerplay Assist'), html.Br(),
-            dcc.Input(id='ppassist', type='number', min=0, max=1000, step=1, placeholder="Power Play Assist", value=375),
+            dcc.Input(id='ppassist', type='number', min=0, max=1000, step=0.1, placeholder="Power Play Assist", value=375.0, debounce=True),
             html.Br(), html.Label('Penalty Minute'), html.Br(),
-            dcc.Input(id='pims', type='number', min=0, max=1000, step=1, placeholder="Penalty Minute", value=45),
+            dcc.Input(id='pims', type='number', min=0, max=1000, step=0.1, placeholder="Penalty Minute", value=45.0, debounce=True),
             html.Br(), html.Label('Short Handed Goal'), html.Br(),
-            dcc.Input(id='shgoal', type='number', min=0, max=1000, step=1, placeholder="Short Handed Goal", value=600),
+            dcc.Input(id='shgoal', type='number', min=0, max=1000, step=0.1, placeholder="Short Handed Goal", value=600.0, debounce=True),
             html.Br(), html.Label('Short Handed Assist'), html.Br(),
-            dcc.Input(id='shassist', type='number', min=0, max=1000, step=1, placeholder="Short Handed Assist", value=375),
+            dcc.Input(id='shassist', type='number', min=0, max=1000, step=0.1, placeholder="Short Handed Assist", value=375.0, debounce=True),
             html.Br(), html.Label('Block'), html.Br(),
-            dcc.Input(id='blocks', type='number', min=0, max=1000, step=1, placeholder="block", value=20),
+            dcc.Input(id='blocks', type='number', min=0, max=1000, step=0.1, placeholder="block", value=20.0, debounce=True),
             html.Br(), html.Label('Faceoff Percentage'), html.Br(),
-            dcc.Input(id='fo_pct', type='number', min=0, max=1000, step=1, placeholder="Face Off Percentage", value=0),
+            dcc.Input(id='fo_pct', type='number', min=0, max=1000, step=0.1, placeholder="Face Off Percentage", value=0.0, debounce=True),
             html.Br(), html.Label('Takeaway'), html.Br(),
-            dcc.Input(id='takeaways', type='number', min=0, max=1000, step=1, placeholder="Takeaway", value=0),
+            dcc.Input(id='takeaways', type='number', min=0, max=1000, step=0.1, placeholder="Takeaway", value=0.0, debounce=True),
             html.Br(), html.Label('Giveaway'), html.Br(),
-            dcc.Input(id='giveaways', type='number', min=0, max=1000, step=1, placeholder="Giveaway", value=0),
+            dcc.Input(id='giveaways', type='number', min=0, max=1000, step=0.1, placeholder="Giveaway", value=0.0, debounce=True),
             html.Br(), html.Label('Plus Minus'), html.Br(),
-            dcc.Input(id='plusminus', type='number', min=0, max=1000, step=1, placeholder="Plus Minus", value=0),
+            dcc.Input(id='plusminus', type='number', min=0, max=1000, step=0.1, placeholder="Plus Minus", value=0.0, debounce=True),
         ], width=3,style={"height": "100%"}),
         # charts
         dbc.Col([
@@ -179,6 +179,8 @@ def fantasy_points(player_select,
                            df["blocked"]*blocks + df["plusMinus"]*plusMinus + df["plusMinus"]*plusMinus + df["faceOffPct"]*faceOffPct
     )
 
+    max_pts_rounded = round(df["fantasyPoints"].max(), -1)
+
     #### player setup
     player_name = str(player_select)
     player_id = df.query(f"playerName == @player_name")["playerID"].unique()[0]
@@ -245,7 +247,7 @@ def fantasy_points(player_select,
                      )
     fig.update_yaxes(title_text="Fantasy Points per Game", 
                      secondary_y=True, 
-                     range=[0, 4000],
+                     range=[0, max_pts_rounded],
                      dtick = 500
                      )
     fig.update_xaxes(title_text="Game number", range=[0, 82])   
@@ -279,7 +281,7 @@ def fantasy_points(player_select,
         line_color=color
         )
     )
-    fig_box.update_xaxes(title_text="Fantasy points per game", range=[-5, 4005])
+    fig_box.update_xaxes(title_text="Fantasy points per game", range=[-5, max_pts_rounded])
     fig_box.update_layout(plot_bgcolor='#f7f7f7',
                       paper_bgcolor='rgba(0,0,0,0)',
                     #   margin=dict(t=0),
@@ -314,7 +316,7 @@ def fantasy_points(player_select,
             ).update_xaxes(title_text="Averge Points/Game",
                            showgrid=True,
                            dtick=100,
-                           range=[0,1100],
+                           range=[0,round(df.groupby("playerID")['fantasyPoints'].mean().max(), -1)],
             )
     
     #### histogram variability
