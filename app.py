@@ -71,7 +71,7 @@ app.layout = dbc.Container([
             ),
             html.Br(),
             # input fantasy points per category
-            html.Label('Input Fantasy Points per...'), html.Br(),
+            html.Label('Input Fantasy Points per:'), html.Br(),
             html.Label('Goal'), html.Br(),
             dcc.Input(id='goals', type='number', min=0, max=1000, step=0.1, placeholder="Goal", value=472.0, debounce=True),
             html.Br(), html.Label('Assist'), html.Br(),
