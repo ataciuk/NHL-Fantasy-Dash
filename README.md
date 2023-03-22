@@ -18,6 +18,12 @@ The dashboard visualizes:
 4) Their average points scored vs. the league
 5) How consistent they are in scoring points each night vs. the league
 
+## Usage:
+
+On the left hand side of the dashboard, select a player (or start typing in their name to search). Once clicked, the dashboard will update that player's stats for the 2021/2022 season. Their points will be in the player's team's colours. 
+
+The points are set by default to my league's points per category, so if your league uses different points per category, you can change those by typing them in on each of the input boxes on the left.  The charts will dynamically resize to make the points visible.  
+
 ### Example View:
 
 <img width="1300" alt="image" src="https://user-images.githubusercontent.com/112535934/226771986-6a415fec-ad2c-4d8b-a646-30efdd7e4e78.png">
