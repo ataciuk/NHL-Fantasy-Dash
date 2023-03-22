@@ -18,7 +18,7 @@ The dashboard visualizes:
 4) Their average points scored vs. the league
 5) How consistent they are in scoring points each night vs. the league
 
-## Usage:
+## Usage
 
 On the left hand side of the dashboard, select a player (or start typing in their name to search). Once clicked, the dashboard will update that player's stats for the 2021/2022 season. Their points will be in the player's team's colours. 
 
@@ -27,6 +27,10 @@ The points are set by default to my league's points per category, so if your lea
 ### Example View:
 
 <img width="1300" alt="image" src="https://user-images.githubusercontent.com/112535934/226771986-6a415fec-ad2c-4d8b-a646-30efdd7e4e78.png">
+
+## Reference
+
+The data for this app was pulled from the [NHL API](https://statsapi.web.nhl.com/api/v1/teams) in March 2023. All rights reserved to the NHL. You can view the code I used to scrape the API [here](https://github.com/ataciuk/NHL-Fantasy-Dash/blob/main/nhl-data-scraping.ipynb). 
 
 ## Contributing
 
